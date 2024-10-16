@@ -1,7 +1,10 @@
-import { Document } from "mongoose";
-import { z } from "zod";
-import { ProjectSchema } from "../schemas/projectSchemas";
+import { Document, PopulatedDoc } from "mongoose";
+import { TaskType } from "./Tasks";
 
-export type Project = z.infer<typeof ProjectSchema>;
-
-export type ProjectType = Document & Project;
+//Mongoose Model Type
+export type ProjectType = Document & {
+    projectName: string;
+    clientName: string;
+    description: string;
+    tasks: PopulatedDoc<TaskType & Document>[];
+};

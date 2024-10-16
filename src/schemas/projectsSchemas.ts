@@ -1,5 +1,5 @@
 import { z } from "zod";
-import mongoose from "mongoose";
+import { Types } from "mongoose";
 
 export const ProjectSchema = z.object({
     projectName: z.string().trim().min(1, "Project name is required"),
@@ -9,6 +9,6 @@ export const ProjectSchema = z.object({
 
 export const objectIdSchema = z
     .string()
-    .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+    .refine((value) => Types.ObjectId.isValid(value), {
         message: "Invalid ObjectId",
     });

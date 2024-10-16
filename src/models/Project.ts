@@ -1,23 +1,32 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import { ProjectType } from "../types/Projects";
 
-const ProjectSchema: Schema = new Schema({
-    projectName: {
-        type: String,
-        required: true,
-        trim: true,
+const ProjectSchema: Schema = new Schema(
+    {
+        projectName: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        clientName: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        description: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        tasks: [
+            {
+                type: Types.ObjectId,
+                ref: "Task",
+            },
+        ],
     },
-    clientName: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-});
+    { timestamps: true }
+);
 
 const Project = mongoose.model<ProjectType>("Project", ProjectSchema);
 export default Project;

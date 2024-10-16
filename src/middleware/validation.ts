@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { objectIdSchema, ProjectSchema } from "../schemas/projectSchemas";
+import { objectIdSchema, ProjectSchema } from "../schemas/projectsSchemas";
 
 export const validateProjectData = (
     req: Request,

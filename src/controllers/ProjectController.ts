@@ -25,7 +25,7 @@ export class ProjectController {
     static getProjectById = async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
-            const project = await Project.findById(id);
+            const project = await Project.findById(id).populate("tasks");
 
             if (!project) {
                 const error = new Error("Project not found");
@@ -42,9 +42,7 @@ export class ProjectController {
     static updateProject = async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
-            const project = await Project.findByIdAndUpdate(id, req.body, {
-                new: true,
-            });
+            const project = await Project.findById(id);
 
             if (!project) {
                 const error = new Error("Project not found");
@@ -52,7 +50,12 @@ export class ProjectController {
                 return;
             }
 
-            // await project.save();
+            project.projectName = req.body.projectName;
+            project.clientName = req.body.clientName;
+            project.description = req.body.description;
+
+            await project.save();
+
             res.json({ data: project });
         } catch (error) {
             res.status(500).json({ error: "Failed to update project" });
@@ -60,8 +63,8 @@ export class ProjectController {
     };
 
     static deleteProject = async (req: Request, res: Response) => {
+        const { id } = req.params;
         try {
-            const { id } = req.params;
             const project = await Project.findById(id);
 
             if (!project) {

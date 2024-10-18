@@ -1,10 +1,9 @@
 import { Document, Types } from "mongoose";
 import { taskStatus } from "../models/Tasks";
 
-//Mongoose Model Type
-
 export type TaskStatus = (typeof taskStatus)[keyof typeof taskStatus];
 
+//Mongoose Model Type
 export type TaskType = Document & {
     name: string;
     description: string;

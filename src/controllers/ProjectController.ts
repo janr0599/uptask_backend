@@ -7,7 +7,7 @@ export class ProjectController {
 
         try {
             await project.save();
-            res.status(201).json({ data: project });
+            res.status(201).json({ message: "Project created successfully" });
         } catch (error) {
             res.status(500).json({ error: "Failed to create project" });
         }
@@ -16,7 +16,7 @@ export class ProjectController {
     static getAllProjects = async (req: Request, res: Response) => {
         try {
             const projects = await Project.find({});
-            res.json({ data: projects });
+            res.status(200).json({ data: projects });
         } catch (error) {
             res.status(500).json({ error: "Failed to get projects" });
         }
@@ -33,7 +33,7 @@ export class ProjectController {
                 return;
             }
 
-            res.json({ data: project });
+            res.status(200).json({ data: project });
         } catch (error) {
             res.status(500).json({ error: "Failed to get project" });
         }
@@ -56,7 +56,7 @@ export class ProjectController {
 
             await project.save();
 
-            res.json({ data: project });
+            res.status(200).json({ data: project });
         } catch (error) {
             res.status(500).json({ error: "Failed to update project" });
         }
@@ -75,9 +75,9 @@ export class ProjectController {
 
             await project.deleteOne();
 
-            res.json({ message: "Project deleted successfully" });
+            res.status(200).json({ message: "Project deleted successfully" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to dekete project" });
+            res.status(500).json({ error: "Failed to delete project" });
         }
     };
 }

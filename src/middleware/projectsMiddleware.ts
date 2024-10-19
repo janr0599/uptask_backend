@@ -18,7 +18,7 @@ export const validateProjectData = (
 ) => {
     const validation = ProjectSchema.safeParse(req.body);
     if (!validation.success) {
-        res.json({ error: validation.error.issues });
+        res.status(400).json({ error: validation.error.issues });
     } else {
         next();
     }

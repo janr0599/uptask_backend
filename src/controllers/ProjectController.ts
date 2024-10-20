@@ -16,7 +16,7 @@ export class ProjectController {
     static getAllProjects = async (req: Request, res: Response) => {
         try {
             const projects = await Project.find({});
-            res.status(200).json({ data: projects });
+            res.status(200).json({ projects: projects });
         } catch (error) {
             res.status(500).json({ error: "Failed to get projects" });
         }
@@ -33,7 +33,7 @@ export class ProjectController {
                 return;
             }
 
-            res.status(200).json({ data: project });
+            res.status(200).json({ project: project });
         } catch (error) {
             res.status(500).json({ error: "Failed to get project" });
         }
@@ -56,7 +56,7 @@ export class ProjectController {
 
             await project.save();
 
-            res.status(200).json({ data: project });
+            res.status(200).json({ project: project });
         } catch (error) {
             res.status(500).json({ error: "Failed to update project" });
         }

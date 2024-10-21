@@ -56,7 +56,7 @@ export class ProjectController {
 
             await project.save();
 
-            res.status(200).json({ project: project });
+            res.status(201).json({ message: "Project updated successfully" });
         } catch (error) {
             res.status(500).json({ error: "Failed to update project" });
         }

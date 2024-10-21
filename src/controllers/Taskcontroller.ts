@@ -11,7 +11,7 @@ export class TaskController {
 
         try {
             await Promise.allSettled([task.save(), req.project.save()]);
-            res.json({ data: task });
+            res.json({ message: "Task created sucessfully" });
         } catch (error) {
             res.status(500).json({ error: "Failed to create task" });
         }

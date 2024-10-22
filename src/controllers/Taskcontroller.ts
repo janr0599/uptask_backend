@@ -30,7 +30,7 @@ export class TaskController {
 
     static getTaskById = async (req: Request, res: Response) => {
         try {
-            res.json({ data: req.task });
+            res.json({ task: req.task });
         } catch (error) {
             res.status(500).json({ error: "Failed to get task" });
         }
@@ -43,7 +43,7 @@ export class TaskController {
 
             await req.task.save();
 
-            res.json({ data: req.task });
+            res.json({ message: "Task updated successfully" });
         } catch (error) {
             res.status(500).json({ error: "Failed to update task" });
         }
@@ -73,7 +73,7 @@ export class TaskController {
             req.task.status = status;
             await req.task.save();
 
-            res.json({ data: req.task });
+            res.json({ message: "Task status updated sucessfully" });
         } catch (error) {
             res.status(500).json({ error: "Failed to update task status" });
             console.log(error);

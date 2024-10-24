@@ -16,7 +16,7 @@ export class AuthEmail {
                     <p>Hi ${user.name},</p>
                     <p>Thank you for signing up! Please confirm your account by clicking the link below and entering the following confirmation token:</p>
                     <p><strong>Confirmation Token: ${user.token}</strong></p>
-                    <p><a href="[Confirmation Link]">Confirm Account</a>
+                    <p><a href="${process.env.FRONTEND_URL}/auth/confirm-account">Confirm Account</a>
                     <p>This link will expire in 10 minutes.</p>
                     <p>If you didn’t create this account, you can safely ignore this email.</p>
                     <p>Cheers,<br>UpTask Team

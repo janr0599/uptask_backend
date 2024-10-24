@@ -33,3 +33,8 @@ export const loginSchema = z.object({
         .email("Invalid email address"),
     password: z.string().trim().min(8, "Password is required"),
 });
+
+// Request code schema
+export const requestCodeSchema = loginSchema.pick({
+    email: true,
+});

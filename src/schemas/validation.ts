@@ -10,4 +10,5 @@ export const objectIdSchema = z
 export const tokenSchema = z
     .string()
     .trim()
-    .length(6, "The token cannot be empty");
+    .regex(/^\d+$/, "Invalid token")
+    .min(1, "The token cannot be empty");

@@ -13,7 +13,7 @@ export class TaskController {
             await Promise.allSettled([task.save(), req.project.save()]);
             res.json({ message: "Task created sucessfully" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to create task" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -24,7 +24,7 @@ export class TaskController {
             );
             res.json({ data: tasks });
         } catch (error) {
-            res.status(500).json({ error: "Failed to get tasks" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -32,7 +32,7 @@ export class TaskController {
         try {
             res.json({ task: req.task });
         } catch (error) {
-            res.status(500).json({ error: "Failed to get task" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -45,7 +45,7 @@ export class TaskController {
 
             res.json({ message: "Task updated successfully" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to update task" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -62,7 +62,7 @@ export class TaskController {
 
             res.json({ message: "Task deleted successfully" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to delete task" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -75,7 +75,7 @@ export class TaskController {
 
             res.json({ message: "Task status updated sucessfully" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to update task status" });
+            res.status(500).json({ error: "there's been an error" });
             console.log(error);
         }
     };

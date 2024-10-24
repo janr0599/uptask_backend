@@ -42,7 +42,7 @@ export class AuthController {
                     "Account created, please check your email to confirm your account",
             });
         } catch (error) {
-            res.status(500).json({ error: "Failed to create account" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -64,10 +64,10 @@ export class AuthController {
 
             res.status(200).json({
                 message:
-                    "Account confirmed, you may now close this window and login",
+                    "Your account has been successfully confirmed! Please log in to continue",
             });
         } catch (error) {
-            res.status(500).json({ error: "Failed to confirm account" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -97,6 +97,7 @@ export class AuthController {
                     name: user.name,
                     token: token.token,
                 });
+                await token.save();
 
                 const error = new Error(
                     "Account has not been confirmed, we have sent you an email confirmation"
@@ -118,7 +119,7 @@ export class AuthController {
 
             res.status(200).json({ message: "Authenticated" });
         } catch (error) {
-            res.status(500).json({ error: "Failed to login" });
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 
@@ -160,7 +161,85 @@ export class AuthController {
                     "A new token has been sent, please check your email to confirm your account",
             });
         } catch (error) {
-            res.status(500).json({ error: "Failed to send token" });
+            res.status(500).json({ error: "there's been an error" });
+        }
+    };
+
+    static forgotPassword = async (req: Request, res: Response) => {
+        try {
+            const { email } = req.body;
+
+            // Check if user Exists
+            const user = await User.findOne({ email });
+            if (!user) {
+                const error = new Error("User not registered");
+                res.status(404).json({ error: error.message });
+                return;
+            }
+
+            // Generate token
+            const token = new Token();
+            token.token = generateToken();
+            token.user = user.id;
+            await token.save();
+
+            // Send confirmation email
+            AuthEmail.sendResetPasswordEmail({
+                email: user.email,
+                name: user.name,
+                token: token.token,
+            });
+
+            res.status(200).json({
+                message:
+                    "We have sent you an email with instructions to reset your password",
+            });
+        } catch (error) {
+            res.status(500).json({ error: "there's been an error" });
+        }
+    };
+
+    static validateToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.body;
+            const tokenExists = await Token.findOne({ token });
+
+            if (!tokenExists) {
+                const error = new Error("Invalid Token");
+                res.status(404).json({ error: error.message });
+                return;
+            }
+
+            res.status(200).json({
+                message: "Confirmed, set a new password",
+            });
+        } catch (error) {
+            res.status(500).json({ error: "there's been an error" });
+        }
+    };
+
+    static updatePasswordWithToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.params;
+            const { password } = req.body;
+
+            const tokenExists = await Token.findOne({ token });
+
+            if (!tokenExists) {
+                const error = new Error("Invalid Token");
+                res.status(404).json({ error: error.message });
+                return;
+            }
+
+            const user = await User.findById(tokenExists.user);
+            user.password = await hashPassword(password);
+
+            await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
+            res.status(200).json({
+                message: "New password successfully set",
+            });
+        } catch (error) {
+            res.status(500).json({ error: "there's been an error" });
         }
     };
 }

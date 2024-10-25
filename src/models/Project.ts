@@ -24,6 +24,10 @@ const ProjectSchema: Schema = new Schema(
                 ref: "Task",
             },
         ],
+        manager: {
+            type: Types.ObjectId,
+            ref: "User",
+        },
     },
     { timestamps: true }
 );

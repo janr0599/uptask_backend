@@ -9,4 +9,5 @@ export type ProjectType = Document & {
     description: string;
     tasks: PopulatedDoc<TaskType & Document>[];
     manager: PopulatedDoc<UserType & Document>;
+    team: PopulatedDoc<UserType & Document>[];
 };

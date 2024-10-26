@@ -28,6 +28,12 @@ const ProjectSchema: Schema = new Schema(
             type: Types.ObjectId,
             ref: "User",
         },
+        team: [
+            {
+                type: Types.ObjectId,
+                ref: "User",
+            },
+        ],
     },
     { timestamps: true }
 );

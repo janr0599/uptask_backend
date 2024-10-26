@@ -4,9 +4,10 @@ import {
     validateProjectData,
     validateProjectExists,
 } from "../middleware/projectsMiddleware";
-import TaskRoutes from "./taskRoutes";
 import { validateId } from "../middleware/validation";
 import { authenticate } from "../middleware/authMiddleware";
+import TaskRoutes from "./taskRoutes";
+import TeamRoutes from "./teamRoutes";
 
 const router = Router();
 
@@ -22,5 +23,8 @@ router.delete("/:id", ProjectController.deleteProject);
 
 // Task Routes
 router.use("/:projectId/tasks", TaskRoutes);
+
+// Routes for teams
+router.use("/:projectId/team/", TeamRoutes);
 
 export default router;

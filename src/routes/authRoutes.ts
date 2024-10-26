@@ -5,6 +5,7 @@ import {
     validateEmail,
     validateUserData,
     validateNewPassword,
+    authenticate,
 } from "../middleware/authMiddleware";
 import { validateToken } from "../middleware/validation";
 
@@ -25,5 +26,6 @@ router.post(
     validateNewPassword,
     AuthController.updatePasswordWithToken
 );
+router.get("/user", authenticate, AuthController.user);
 
 export default router;

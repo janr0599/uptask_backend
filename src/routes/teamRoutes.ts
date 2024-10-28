@@ -8,6 +8,6 @@ const router = Router({ mergeParams: true });
 router.post("/find", validateEmail, TeamMemberController.findMemberByEmail);
 router.get("/", TeamMemberController.getProjectTeam);
 router.post("/", validateId, TeamMemberController.addMemberById);
-router.delete("/", validateId, TeamMemberController.removeMemberById);
+router.delete("/:userId", validateId, TeamMemberController.removeMemberById);
 
 export default router;

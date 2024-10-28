@@ -22,8 +22,11 @@ export class TeamMemberController {
 
     static getProjectTeam = async (req: Request, res: Response) => {
         try {
-            await req.project.populate("team", "id name email");
-            res.json({ team: req.project.team });
+            const { team } = await req.project.populate(
+                "team",
+                "id name email"
+            );
+            res.json({ team: team });
         } catch (error) {
             res.status(500).json({
                 message: "There's been an error",
@@ -50,7 +53,7 @@ export class TeamMemberController {
                 const error = new Error(
                     "User has already been added to the project"
                 );
-                res.status(409).json({ message: error.message });
+                res.status(409).json({ error: error.message });
                 return;
             }
 
@@ -64,19 +67,17 @@ export class TeamMemberController {
     };
 
     static removeMemberById = async (req: Request, res: Response) => {
-        const { memberId } = req.body;
+        const { userId } = req.params;
 
         //  Avoid executing the code if user does not exist in the project
-        if (
-            !req.project.team.some((member) => member.toString() === memberId)
-        ) {
+        if (!req.project.team.some((member) => member.toString() === userId)) {
             const error = new Error("User does not exist in the project");
-            res.status(409).json({ message: error.message });
+            res.status(409).json({ error: error.message });
             return;
         }
 
         req.project.team = req.project.team.filter(
-            (member) => member.toString() !== memberId
+            (member) => member.toString() !== userId
         );
         await req.project.save();
 

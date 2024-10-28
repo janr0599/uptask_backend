@@ -7,6 +7,8 @@ export class ProjectController {
 
         // Assigns project creator
         project.manager = req.user.id;
+        // Creates the first user in the Team table for the manager
+        project.team.push(req.user.id);
 
         try {
             await project.save();

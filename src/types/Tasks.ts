@@ -9,4 +9,5 @@ export type TaskType = Document & {
     description: string;
     project: Types.ObjectId;
     status: TaskStatus;
+    completedBy: Types.ObjectId;
 };

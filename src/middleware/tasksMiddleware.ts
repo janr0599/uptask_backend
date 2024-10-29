@@ -78,3 +78,17 @@ export const taskBelongsToProject = (
 
     next();
 };
+
+export const isAuthorized = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (req.user.id.toString() !== req.project.manager.toString()) {
+        const error = new Error("Invalid action");
+        res.status(400).json({ error: error.message });
+        return;
+    }
+
+    next();
+};

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { TaskController } from "../controllers/Taskcontroller";
 import {
+    isAuthorized,
     taskBelongsToProject,
     validateTaskData,
     validateTaskExists,
@@ -13,11 +14,16 @@ router.param("taskId", validateId);
 router.param("taskId", validateTaskExists);
 router.param("taskId", taskBelongsToProject);
 
-router.post("/", validateTaskData, TaskController.createTask);
+router.post("/", isAuthorized, validateTaskData, TaskController.createTask);
 router.get("/", TaskController.getProjectTasks);
 router.get("/:taskId", TaskController.getTaskById);
-router.put("/:taskId", validateTaskData, TaskController.updateTask);
-router.delete("/:taskId", TaskController.deleteTask);
+router.put(
+    "/:taskId",
+    isAuthorized,
+    validateTaskData,
+    TaskController.updateTask
+);
+router.delete("/:taskId", isAuthorized, TaskController.deleteTask);
 router.post(
     "/:taskId/status",
     validateTaskStatus,

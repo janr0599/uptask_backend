@@ -30,11 +30,20 @@ const TaskSchema: Schema = new Schema(
             enum: Object.values(taskStatus),
             default: taskStatus.PENDING,
         },
-        completedBy: {
-            type: Types.ObjectId,
-            ref: "User",
-            default: null,
-        },
+        completedBy: [
+            {
+                user: {
+                    type: Types.ObjectId,
+                    ref: "User",
+                    default: null,
+                },
+                status: {
+                    type: String,
+                    enum: Object.values(taskStatus),
+                    default: taskStatus.PENDING,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );

@@ -13,4 +13,6 @@ export type TaskType = Document & {
         user: Types.ObjectId;
         status: TaskStatus;
     }[];
+    notes: Types.ObjectId[];
+    _id: Types.ObjectId;
 };

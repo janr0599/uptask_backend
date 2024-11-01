@@ -3,10 +3,10 @@ import { Request, Response, NextFunction } from "express";
 import { objectIdSchema, tokenSchema } from "../schemas/validation";
 
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
-    const { id, taskId, userId } = req.params;
+    const { id, taskId, userId, noteId } = req.params;
     const { memberId } = req.body;
     const validation = objectIdSchema.safeParse(
-        id || taskId || memberId || userId
+        id || taskId || memberId || userId || noteId
     );
     if (!validation.success) {
         res.json({ error: validation.error.issues });

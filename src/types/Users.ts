@@ -6,6 +6,7 @@ export type UserType = Document & {
     password: string;
     name: string;
     confirmed: boolean;
+    _id: Types.ObjectId;
 };
 
 export type UserPayload = {

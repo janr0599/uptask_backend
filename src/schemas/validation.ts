@@ -12,3 +12,8 @@ export const tokenSchema = z
     .trim()
     .regex(/^\d+$/, "Invalid token")
     .min(1, "The token cannot be empty");
+
+export const validatePasswordSchema = z
+    .string()
+    .trim()
+    .min(1, "Password is required");

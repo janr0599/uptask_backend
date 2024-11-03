@@ -7,7 +7,7 @@ import {
     validateNewPassword,
     authenticate,
 } from "../middleware/authMiddleware";
-import { validateToken } from "../middleware/validation";
+import { validatePassword, validateToken } from "../middleware/validation";
 
 const router = Router();
 
@@ -27,5 +27,11 @@ router.post(
     AuthController.updatePasswordWithToken
 );
 router.get("/user", authenticate, AuthController.user);
+router.post(
+    "/check-password",
+    authenticate,
+    validatePassword,
+    AuthController.checkPassword
+);
 
 export default router;

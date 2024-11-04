@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
-import Task from "../models/Tasks";
+import Task, { taskStatus } from "../models/Tasks";
 
 export class TaskController {
     static createTask = async (req: Request, res: Response) => {
-        const task = new Task(req.body);
+        const taskData = {
+            ...req.body,
+            status: req.body.status || taskStatus.PENDING,
+        };
+        const task = new Task(taskData);
 
         task.project = req.project.id;
 

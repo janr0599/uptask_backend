@@ -7,10 +7,10 @@ import {
 } from "../schemas/validation";
 
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
-    const { id, taskId, userId, noteId } = req.params;
+    const { id, projectId, taskId, userId, noteId } = req.params;
     const { memberId } = req.body;
     const validation = objectIdSchema.safeParse(
-        id || taskId || memberId || userId || noteId
+        id || projectId || taskId || memberId || userId || noteId
     );
     if (!validation.success) {
         res.json({ error: validation.error.issues });

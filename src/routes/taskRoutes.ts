@@ -10,6 +10,7 @@ import {
 import { validateId } from "../middleware/validation";
 
 const router = Router({ mergeParams: true });
+
 router.param("taskId", validateId);
 router.param("taskId", validateTaskExists);
 router.param("taskId", taskBelongsToProject);

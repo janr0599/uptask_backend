@@ -10,26 +10,27 @@ import TaskRoutes from "./taskRoutes";
 import TeamRoutes from "./teamRoutes";
 import NotesRoutes from "./noteRoutes";
 import {
+    isAuthorized,
     taskBelongsToProject,
     validateTaskExists,
 } from "../middleware/tasksMiddleware";
 
 const router = Router();
 
+router.use(authenticate);
+
+router.param("projectId", validateId);
 router.param("projectId", validateProjectExists);
-router.param("id", validateId);
 
 router.param("taskId", validateId);
 router.param("taskId", validateTaskExists);
 router.param("taskId", taskBelongsToProject);
 
-router.use(authenticate);
-
 router.post("/", validateProjectData, ProjectController.createProject);
 router.get("/", ProjectController.getAllProjects);
-router.get("/:id", ProjectController.getProjectById);
-router.put("/:id", validateProjectData, ProjectController.updateProject);
-router.delete("/:id", ProjectController.deleteProject);
+router.get("/:id", validateId, ProjectController.getProjectById);
+router.put("/:projectId", isAuthorized, ProjectController.updateProject);
+router.delete("/:projectId", isAuthorized, ProjectController.deleteProject);
 
 // Task Routes
 router.use("/:projectId/tasks", TaskRoutes);
